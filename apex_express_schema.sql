@@ -37,8 +37,6 @@ CREATE TABLE `delivery_status` (
   `Status_type` enum('Booked','In-Transit','Out for Delivery','Completed','Failed') NOT NULL,
   `Remarks` text DEFAULT NULL,
   `Attempts` int(11) DEFAULT 0,
-  `Origin_city` varchar(50) DEFAULT NULL,
-  `Destination_city` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Status_id`)
 );
 
@@ -233,17 +231,17 @@ INSERT INTO `rider_phone` (`Rider_ID`, `Phone_no`) VALUES
 UNLOCK TABLES;
 
 LOCK TABLES `delivery_status` WRITE;
-INSERT INTO `delivery_status` (`Status_id`, `Status_type`, `Remarks`, `Attempts`, `Origin_city`, `Destination_city`) VALUES
-('STAT-001', 'Booked', 'Parcel registered successfully', 0, 'Islamabad', 'Karachi'),
-('STAT-002', 'In-Transit', 'Left Lahore Hub going to Islamabad', 0, 'Lahore', 'Islamabad'),
-('STAT-003', 'Out for Delivery', 'Rider out to drop package', 1, 'Karachi', 'Karachi'),
-('STAT-004', 'Completed', 'Delivered and cash collected', 1, 'Rawalpindi', 'Lahore'),
-('STAT-005', 'Failed', 'Customer house locked', 3, 'Faisalabad', 'Multan'),
-('STAT-006', 'Booked', 'Awaiting customs approval/clearance', 0, 'Multan', 'Peshawar'),
-('STAT-007', 'In-Transit', 'Arrived at Peshawar Sorting Facility', 0, 'Peshawar', 'Quetta'),
-('STAT-008', 'Completed', 'Handed over to recipient family member', 1, 'Quetta', 'Sialkot'),
-('STAT-009', 'Out for Delivery', 'Rider is making the first attempt', 1, 'Sialkot', 'Gujranwala'),
-('STAT-010', 'Completed', 'Payment received via Bank Transfer', 1, 'Gujranwala', 'Islamabad');
+INSERT INTO `delivery_status` (`Status_id`, `Status_type`, `Remarks`, `Attempts`) VALUES
+('STAT-001', 'Booked', 'Parcel registered successfully', 0),
+('STAT-002', 'In-Transit', 'Left Lahore Hub going to Islamabad', 0),
+('STAT-003', 'Out for Delivery', 'Rider out to drop package', 1),
+('STAT-004', 'Completed', 'Delivered and cash collected', 1),
+('STAT-005', 'Failed', 'Customer house locked', 3),
+('STAT-006', 'Booked', 'Awaiting customs approval/clearance', 0),
+('STAT-007', 'In-Transit', 'Arrived at Peshawar Sorting Facility', 0),
+('STAT-008', 'Completed', 'Handed over to recipient family member', 1),
+('STAT-009', 'Out for Delivery', 'Rider is making the first attempt', 1),
+('STAT-010', 'Completed', 'Payment received via Bank Transfer', 1);
 UNLOCK TABLES;
 
 LOCK TABLES `parcel` WRITE;
