@@ -1,355 +1,570 @@
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-    :root {
-        --primary-color: #1c3343;
-        --accent-color: #7c9f5f;
-        --secondary-color: #b3c6a8;
-        --bg-light: #f8fafc;
-        --text-white: #ffffff;
-    }
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
-    body {
-        background-color: var(--primary-color);
-    }
+:root {
+    --primary-color: #1c3343;
+    --accent-color: #7c9f5f;
+    --secondary-color: #b3c6a8;
+    --bg-light: #f8fafc;
+    --text-white: #ffffff;
+    --card-bg-glass: rgba(255, 255, 255, 0.04);
+    --border-glass: rgba(255, 255, 255, 0.08);
+}
 
-    .apex-navbar {
-        width: 100%;
-        background-color: var(--primary-color);
-        box-shadow: 0 4px 20px rgba(28, 51, 67, 0.05);
-        position: sticky;
-        top: 0;
-        z-index: 9999;
-    }
-
-    .nav-wrapper {
-        max-width: 1300px;
-        width: 90%;
-        margin: 0 auto;
-        height: 80px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        cursor: pointer;
-    }
-    .logo-truck {
-        height: 52px;
-        width: auto;
-        object-fit: contain;
-        display: block;
-    }
-
-    .logo-info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .logo-text {
-        font-size: 24px;
-        line-height: 1.1;
-        letter-spacing: -0.5px;
-    }
-
-    .brand-bold {
-        font-weight: 700;
-        color: var(--accent-color);
-    }
-    .brand-light {
-        font-weight: 400;
-        color: var(--accent-color);
-    }
-
-    .logo-slogan {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        margin-top: 4px;
-        width: max-content;
-
-        /* Slogan gradient effect */
-        background: linear-gradient(to right, var(--accent-color), var(--secondary-color));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .nav-menu {
-        list-style: none;
-        display: flex;
-        align-items: center;
-        gap: 35px;
-    }
-
-    .nav-item {
-        text-decoration: none;
-        font-size: 15px;
-        font-weight: 500;
-        color: var(--accent-color);
-        opacity: 0.85;
-        transition: all 0.25s ease;
-        padding: 8px 0;
-        position: relative;
-    }
-
-    .nav-item:hover,
-    .nav-item.active {
-        color: var(--secondary-color);
-        opacity: 1;
-    }
-
-    .nav-item::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background-color: var(--secondary-color);
-        transition: width 0.3s ease;
-    }
-
-    .nav-item:hover::after,
-    .nav-item.active::after {
-        width: 100%;
-    }
-
-    .btn-portal {
-        text-decoration: none;
-        background-color: var(--accent-color);
-        color: var(--text-white);
-        padding: 12px 24px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-        /* Border ko pehle transparent rakha */
-        display: inline-block;
-    }
-
-    .btn-portal:hover {
-        background-color: transparent;
-        /* Background hata diya */
-        border: 2px solid var(--accent-color);
-        /* Hover par border dikha diya */
-        color: var(--accent-color);
-        /* Text ka color border se match kar diya */
-        border-radius: 6px;
-        /* Hover par thoda round shape */
-    }
-
-    /* Responsive adjustment */
-    @media (max-width: 768px) {
-        .nav-menu {
-            display: none;
-        }
-    }
-
-
-
-/* General Dashboard Style */
-body {
-    background-color: #1c3343; /* Deep Navy Blue */
-    color: #ffffff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/* Form Container */
-.admin-container {
-    max-width: 600px; /* Thoda sa bara kiya taake 2 columns fit ho sakein */
-    margin: 40px auto;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 25px;
-    border-radius: 12px;
-    border: 1px solid rgba(124, 159, 95, 0.2);
-    backdrop-filter: blur(8px);
-}
-
-/* Heading */
-h2 {
-    color: #7c9f5f;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 20px;
-}
-
-/* Yahan hum form ko flex bana rahe hain */
-.admin-container form {
+body {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    min-height: 100vh;
     display: flex;
-    flex-wrap: wrap; /* Jab jagah kam ho toh niche chala jaye */
-    gap: 10px;
+    flex-direction: column;
 }
 
-/* Inputs ko 48% width di taake 2 ek line mein aa sakein */
-.admin-container input {
-    flex: 1 1 45%; /* Har input ko kam se kam 45% jagah do */
-    padding: 10px 12px;
-    background: #1c3343;
-    border: 1px solid #3a5060;
-    color: #fff;
-    border-radius: 6px;
+/* Navbar Global Match Styles */
+.apex-navbar {
+    width: 100%;
+    background-color: var(--primary-color);
+    box-shadow: 0 4px 20px rgba(28, 51, 67, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
+
+.nav-wrapper {
+    max-width: 1300px;
+    width: 90%;
+    margin: 0 auto;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-truck {
+    height: 48px;
+    width: auto;
+}
+
+.logo-text {
+    font-size: 24px;
+    letter-spacing: -0.5px;
+}
+
+.brand-bold {
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.brand-light {
+    font-weight: 400;
+    color: var(--secondary-color);
+}
+
+.logo-slogan {
+    font-size: 11px;
+    color: #a3b3bc;
+    font-weight: 500;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 35px;
+}
+
+.nav-item {
+    color: #a3b3bc;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    color: var(--text-white);
+}
+
+.btn-portal {
+    background-color: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--text-white);
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-portal.active, .btn-portal:hover {
+    background-color: var(--accent-color);
+    color: var(--text-white);
+}
+
+.line-break {
+    border: 0;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 100%;
+}
+
+/* Master Layout Content Workspace wrapping */
+.admin-wrapper-workspace {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px;
+}
+
+/* Admin Center Clean Authentication Login UI Component */
+.admin-login-card {
+    background: var(--card-bg-glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--border-glass);
+    padding: 45px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    max-width: 440px;
+    text-align: center;
+}
+
+.admin-login-card h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 6px;
+}
+
+.login-subtitle {
+    color: #a3b3bc;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.admin-login-card input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-white);
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.admin-login-card input:focus {
+    border-color: var(--accent-color);
+}
+
+.btn-brand-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent-color);
+    border: none;
+    color: var(--text-white);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-brand-submit:hover {
+    background-color: #69884f;
+}
+
+/* Dashboard Workspace Base Card Frame */
+.dashboard-central-holder {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-glass);
+    width: 100%;
+    max-width: 1150px;
+    border-radius: 16px;
+    padding: 35px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.dashboard-action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 20px;
+}
+
+.btn-action-back {
+    text-decoration: none;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--text-white);
+    border: 1px solid var(--border-glass);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-action-back:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-action-logout {
+    text-decoration: none;
+    padding: 10px 20px;
+    background: #a94442;
+    color: var(--text-white);
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.btn-action-logout:hover {
+    background-color: #8c3533;
+}
+
+.workspace-main-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 35px;
+    letter-spacing: -0.3px;
+}
+
+/* Clean, Balanced Tile Button Interface Structure */
+.dashboard-tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 950px) {
+    .dashboard-tiles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 550px) {
+    .dashboard-tiles-grid { grid-template-columns: 1fr; }
+}
+
+.hub-tile-btn {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 160px; /* Locks completely identical heights across layout buttons */
+    background: var(--card-bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.hub-tile-btn:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--secondary-color);
+}
+
+.hub-tile-highlighted {
+    border-color: rgba(124, 159, 95, 0.4);
+    background: rgba(124, 159, 95, 0.06);
+}
+
+.hub-tile-highlighted:hover {
+    background: rgba(124, 159, 95, 0.12);
+    border-color: var(--accent-color);
+}
+
+.tile-art-box {
+    font-size: 36px;
+    margin-bottom: 12px;
+}
+
+.tile-label-text {
+    color: var(--text-white) !important;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Modular Input Forms Management UI Components */
+.brand-engineered-form {
+    max-width: 620px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-glass);
+    padding: 30px;
+    border-radius: 12px;
+}
+
+.expanded-manifest-form {
+    max-width: 800px;
+}
+
+.form-sub-division-header {
+    color: var(--secondary-color);
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 6px;
+    margin-top: 30px;
+    margin-bottom: 18px;
+}
+
+.brand-engineered-form input, .brand-dropdown-select {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: var(--text-white);
+    font-size: 15px;
+    outline: none;
     box-sizing: border-box;
 }
 
-/* Agar koi field puri line par chahiye (jaise Tracking ID) */
-.admin-container input[name="tracking_id"], 
-.admin-container input[name="weight"] {
-    flex: 1 1 100%; /* Yeh puri line legi */
+.brand-engineered-form input:focus, .brand-dropdown-select:focus {
+    border-color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.08);
 }
 
-/* Button ko puri width */
-.admin-container button {
+.brand-dropdown-select option {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+}
+
+.btn-form-commit {
     width: 100%;
-    padding: 12px;
-    background: #7c9f5f;
+    padding: 14px;
+    background-color: var(--accent-color);
     border: none;
-    color: #1c3343;
-    font-weight: 700;
+    color: var(--text-white);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
     cursor: pointer;
-    border-radius: 6px;
-    margin-top: 5px;
-}
-/* Logout link - Top Right alignment */
-a {
-    display: block;
-    text-align: right;
-    color: #7c9f5f ;/* Soft red */
-    font-size: 13px;
-    margin-bottom: 10px;
-    text-decoration: none;
+    transition: background-color 0.2s;
+    margin-top: 10px;
 }
 
-a:hover {
-    text-decoration: underline;
+.btn-form-commit:hover {
+    background-color: #69884f;
 }
 
-    .footer {
-        background-color: transparent;
-        color: #ffffff;
-        padding: 30px 0;
-        margin-top: 20px;
-    }
+/* Centered & Perfectly Aligned Table Matrix Presentation */
+.tables-view-scroll-chamber {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 
-    .footer-container {
-    display: flex; /* Ye columns ko side-by-side laayega */
-    justify-content: space-between; /* Space barabar karega */
-    flex-wrap: wrap; /* Screen choti hone par niche shift karega */
-    padding: 40px 5%;
+.table-section-divider-title {
+    width: 100%;
+    max-width: 1000px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px 16px;
+    margin-top: 45px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--accent-color);
+    border-radius: 0 6px 6px 0;
+}
+
+.table-alignment-box {
+    width: 100%;
+    max-width: 1000px;
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border-glass);
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.brand-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(28, 51, 67, 0.4);
+    font-size: 14px;
     text-align: left;
 }
 
-.footer-col {
-    flex: 1; /* Har column ko barabar jagah milegi */
-    min-width: 250px; /* Mobile par column ko chota nahi hone dega */
-    margin-bottom: 20px;
+.brand-data-table th {
+    background: rgba(124, 159, 95, 0.15);
+    backdrop-filter: blur(5px);
+    color: var(--text-white);
+    font-weight: 600;
+    padding: 14px 16px;
+    font-size: 13px;
+    border-bottom: 2px solid var(--border-glass);
 }
 
-    .footer-col h3 {
-        margin-bottom: 20px;
-        font-size: 18px;
-        color: var(--accent-color);
-    }
+.brand-data-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-glass);
+    color: #cbd5e1;
+}
 
-    .footer-col ul {
-        list-style: none;
-    }
+.brand-data-table tbody tr:nth-of-type(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+}
 
-    .footer-col ul li {
-        margin-bottom: 10px;
-    }
+.brand-data-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
 
-    .footer-col ul li a {
-        color: #cccccc;
-        text-decoration: none;
-        transition: 0.3s;
-    }
+.no-records-banner {
+    width: 100%;
+    max-width: 1000px;
+    padding: 15px;
+    background: rgba(255, 193, 7, 0.1);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    color: #ffe082;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-    .footer-col ul li a:hover {
-        color: var(--accent-color);
-    }
+/* Brand Identity Match Footer */
+.footer {
+    background-color: #12222e;
+    padding: 50px 0 20px 0;
+    margin-top: auto;
+    width: 100%;
+    border-top: 1px solid var(--border-glass);
+}
 
-    .footer-col p {
-        color: #cccccc;
-        line-height: 1.6;
-    }
+.footer-container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
 
-    .social-links {
-        display: flex;
-        gap: 15px;
-    }
+@media (max-width: 768px) {
+    .footer-container { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+    .social-links { justify-content: center; }
+    .bottom-content { flex-direction: column; gap: 15px; text-align: center; }
+}
 
-    .social-icon {
-        width: 30px;
-        height: 30px;
-    }
+.footer-col h3 {
+    color: var(--text-white);
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
 
-    .line {
-        border: 0;
-        height: 1px;
-        background-color: var(--accent-color);
-        margin: 30px 0;
-        width: 100%;
-    }
+.footer-col ul {
+    list-style: none;
+}
 
-    .brand-group {
-        margin-left: 30px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+.footer-col ul li {
+    margin-bottom: 12px;
+}
 
-    .brand-name {
-        font-weight: bold;
-        font-size: 18px;
-        color: var(--accent-color);
-    }
+.footer-col ul li a {
+    color: #a3b3bc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
 
-    .bottom-content p {
-        margin: 0;
-        font-size: 14px;
-        color: #cccccc;
-        font-weight: 400;
-        font-family: sans-serif;
-    }
+.footer-col ul li a:hover {
+    color: var(--accent-color);
+}
 
-    .footer-logo {
-        height: 40px;
-        width: auto;
-    }
+.footer-col p {
+    color: #a3b3bc;
+    line-height: 1.6;
+}
 
-    .bottom-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px;
-    }
+.social-links {
+    display: flex;
+    gap: 15px;
+}
 
-    .bottom-links {
-        margin-right: 30px;
-        display: flex;
-        gap: 20px;
-    }
+.social-icon {
+    width: 30px;
+    height: 30px;
+    transition: opacity 0.2s;
+}
 
-    .bottom-links a {
-        color: #cccccc;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 500;
-        transition: 0.3s;
-    }
+.social-icon:hover {
+    opacity: 0.8;
+}
 
-    .bottom-links a:hover {
-        color: var(--secondary-color);
-        text-decoration: underline;
-    }
+.line {
+    border: 0;
+    height: 1px;
+    background-color: var(--accent-color);
+    margin: 30px 0;
+    width: 100%;
+    opacity: 0.3;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.bottom-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-logo {
+    height: 35px;
+    width: auto;
+}
+
+.brand-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--accent-color);
+}
+
+.bottom-content p {
+    font-size: 14px;
+    color: #a3b3bc;
+}
+
+.bottom-links {
+    display: flex;
+    gap: 20px;
+}
+
+.bottom-links a {
+    color: #a3b3bc;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.bottom-links a:hover {
+    color: var(--secondary-color);
+}

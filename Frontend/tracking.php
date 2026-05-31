@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Apex Express</title>
+    <title>Apex Express</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="tracking_style.css">
 </head>
+
 <body>
-    
-     <nav class="apex-navbar">
+
+    <nav class="apex-navbar">
         <div class="nav-wrapper">
             <div class="nav-logo">
                 <img src="logo.png" alt="Apex Express Logo" class="logo-truck">
@@ -39,39 +41,39 @@
         <p class="p">Enter your tracking number below to see the latest status of your shipment.</p>
     </div>
 
-<section class="tracking-section">
-    <form action="" method="POST">
-    <input type="text" name="tracking_id" placeholder="Enter Tracking ID (e.g. APX-2026-XXX)" required>
-    <button type="submit" name="search">Track Now</button>
-</form>
-</section>
+    <section class="tracking-section">
+        <form action="" method="POST">
+            <input type="text" name="tracking_id" placeholder="Enter Tracking ID (e.g. APX-2026-XXX)" required>
+            <button type="submit" name="search">Track Now</button>
+        </form>
+    </section>
 
 </body>
 <div id="result-area">
-<?php
-$conn = mysqli_connect("localhost", "root", "", "apex_express_schema");
+    <?php
+    $conn = mysqli_connect("localhost", "root", "", "apex_express_db");
 
-$search_id = "";
-if(isset($_POST['search'])) {
-    $search_id = $_POST['tracking_id'];
-} elseif(isset($_GET['tracking_id'])) {
-    $search_id = $_GET['tracking_id'];
-}
+    $search_id = "";
+    if (isset($_POST['search'])) {
+        $search_id = $_POST['tracking_id'];
+    } elseif (isset($_GET['tracking_id'])) {
+        $search_id = $_GET['tracking_id'];
+    }
 
-if(!empty($search_id)) {
-    $id = mysqli_real_escape_string($conn, $search_id);
-    $query = "SELECT p.*, s.First_name as s_fname, r.First_name as r_fname, ds.Status_type 
+    if (!empty($search_id)) {
+        $id = mysqli_real_escape_string($conn, $search_id);
+        $query = "SELECT p.*, s.First_name as s_fname, r.First_name as r_fname, ds.Status_type 
               FROM parcel p
               JOIN sender s ON p.Sender_ID = s.Sender_ID
               JOIN reciever r ON p.Reciever_ID = r.Reciever_ID
               JOIN delivery_status ds ON p.Status_id = ds.Status_id
               WHERE p.Tracking_id = '$id'";
-    
-    $result = mysqli_query($conn, $query);
-    
-    if(mysqli_num_rows($result) > 0) {
-        $data = mysqli_fetch_assoc($result);
-        echo '
+
+        $result = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $data = mysqli_fetch_assoc($result);
+            echo '
         <div class="tracking-result-box">
             <div class="consignment-header">Consignment No: ' . $data['Tracking_id'] . '</div>
             <div class="details-grid">
@@ -84,11 +86,11 @@ if(!empty($search_id)) {
                 <strong>Current Status:</strong> ' . $data['Status_type'] . '
             </div>
         </div>';
-    } else {
-        echo '<p style="color: red; text-align: center;">ID found</p>';
+        } else {
+            echo '<p style="color: red; text-align: center;">ID found</p>';
+        }
     }
-}
-?>
+    ?>
 </div>
 </div>
 <hr class="line">
@@ -127,7 +129,7 @@ if(!empty($search_id)) {
         <div class="footer-col">
             <h3>Follow Us</h3>
             <div class="social-links">
-                 <a href="https://www.linkedin.com/"><img src="linkedin.png" class="social-icon"></a>
+                <a href="https://www.linkedin.com/"><img src="linkedin.png" class="social-icon"></a>
                 <a href="https://www.linkedin.com/"><img src="facebook-app-symbol.png" class="social-icon"></a>
                 <a href="https://www.instagram.com/"><img src="instagram.png" class="social-icon"></a>
                 <a href="https://www.whatsapp.com/"><img src="whatsapp.png" class="social-icon"></a>
@@ -135,7 +137,7 @@ if(!empty($search_id)) {
         </div>
     </div>
 
-<br>
+    <br>
     <hr class="line">
     <div class="footer-bottom">
         <div class="bottom-content">
