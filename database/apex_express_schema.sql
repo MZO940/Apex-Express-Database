@@ -16,6 +16,12 @@ USE apex_express_db;
 
 
 /* ------------------- TABLE CREATION ------------------- */
+CREATE TABLE `admin` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `admin_username` VARCHAR(50) NOT NULL,
+  `admin_pswd` VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE `branch` (
   `Branch_ID` varchar(50) NOT NULL,
   `Name` varchar(100) NOT NULL,
@@ -116,6 +122,9 @@ CREATE TABLE `sender_phone` (
 );
 
 /* ------------------- DATA INSERTION ------------------- */
+LOCK TABLES `admin` WRITE;
+INSERT INTO `admin` (`admin_username`, `admin_pswd`) VALUES ('admin', 'admin123');
+UNLOCK TABLES;
 
 LOCK TABLES `branch` WRITE;
 INSERT INTO `branch` (`Branch_ID`, `Name`, `Email`, `Street_no`, `Area`, `City`) VALUES
