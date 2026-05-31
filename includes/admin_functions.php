@@ -61,18 +61,20 @@ function addRider($conn, $data)
     return $ok;
 }
 
-// ---------------- PARCEL (TRANSACTION) ----------------
+// ---------------- PARCEL (FIXED) ----------------
 function createParcel($conn, $data)
 {
-
     mysqli_begin_transaction($conn);
 
     try {
 
-        // Sender
+        // ---------------- Sender ----------------
         $stmt = $conn->prepare(
-            "INSERT INTO sender VALUES (?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO sender
+            (Sender_ID, First_name, Last_name, Email, Street_no, Area, City)
+            VALUES (?, ?, ?, ?, ?, ?, ?)"
         );
+
         $stmt->bind_param(
             "sssssss",
             $data['sender_id'],
@@ -86,15 +88,19 @@ function createParcel($conn, $data)
         $stmt->execute();
 
         $stmt = $conn->prepare(
-            "INSERT INTO sender_phone VALUES (?, ?)"
+            "INSERT INTO sender_phone (Sender_ID, Phone_no)
+             VALUES (?, ?)"
         );
         $stmt->bind_param("ss", $data['sender_id'], $data['sender_phone']);
         $stmt->execute();
 
-        // Receiver
+        // ---------------- Receiver ----------------
         $stmt = $conn->prepare(
-            "INSERT INTO reciever VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            "INSERT INTO reciever
+            (Reciever_ID, First_name, Last_name, Email, Postal_code, Street_no, Area, City)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
         );
+
         $stmt->bind_param(
             "ssssssss",
             $data['reciever_id'],
@@ -109,16 +115,18 @@ function createParcel($conn, $data)
         $stmt->execute();
 
         $stmt = $conn->prepare(
-            "INSERT INTO reciever_phone VALUES (?, ?)"
+            "INSERT INTO reciever_phone (Reciever_ID, Phone_no)
+             VALUES (?, ?)"
         );
         $stmt->bind_param("ss", $data['reciever_id'], $data['receiver_phone']);
         $stmt->execute();
 
-        // Status
+        // ---------------- Status ----------------
         $stmt = $conn->prepare(
             "INSERT INTO delivery_status (Status_id, Status_type, Remarks, Attempts)
              VALUES (?, ?, ?, 0)"
         );
+
         $stmt->bind_param(
             "sss",
             $data['status_id'],
@@ -127,7 +135,7 @@ function createParcel($conn, $data)
         );
         $stmt->execute();
 
-        // Parcel
+        // ---------------- Parcel (FIXED bind types) ----------------
         $stmt = $conn->prepare(
             "INSERT INTO parcel
             (Tracking_id, Weight, Origin_city, Destination_city,
@@ -139,7 +147,7 @@ function createParcel($conn, $data)
         $rider = !empty($data['rider_id']) ? $data['rider_id'] : null;
 
         $stmt->bind_param(
-            "sdssssssdss",
+            "sdsssssssss",
             $data['tracking_id'],
             $data['weight'],
             $data['sender_city'],
@@ -157,8 +165,10 @@ function createParcel($conn, $data)
 
         mysqli_commit($conn);
         return true;
-    } catch (Exception $e) {
+    } catch (Throwable $e) {
+
         mysqli_rollback($conn);
+        error_log("Parcel insert failed: " . $e->getMessage());
         return false;
     }
 }
@@ -166,7 +176,7 @@ function createParcel($conn, $data)
 #---------------- UTILITY ----------------
 function renderTable($conn, $tableName)
 {
-    $res = $conn->query("SELECT * FROM `$tableName` LIMIT 10");
+    $res = $conn->query("SELECT * FROM `$tableName`");
 
     echo "<h3 class='table-section-divider-title'>" .
         strtoupper($tableName) .

@@ -6,6 +6,10 @@ require_once __DIR__ . '/../includes/admin_auth.php';
 require_once __DIR__ . '/../includes/admin_functions.php';
 include '../includes/header.php';
 
+/*
+    FIX: Enable MySQL error reporting (critical for debugging inserts)
+*/
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 ?>
 
 <?php
@@ -35,14 +39,19 @@ if (isset($_GET['view']) && isset($_SESSION['logged_in'])) {
 
 // ADD BRANCH
 if (isset($_POST['save_branch'])) {
-    addBranch($conn, $_POST);
-    showAlert("Branch added successfully!");
+    if (addBranch($conn, $_POST)) {
+        showAlert("Branch added successfully!");
+    } else {
+        showAlert("Failed to add branch!");
+    }
 }
 
 // ADD RIDER
 if (isset($_POST['save_rider'])) {
     if (addRider($conn, $_POST)) {
         showAlert("Rider added successfully!");
+    } else {
+        showAlert("Failed to add rider!");
     }
 }
 
@@ -51,7 +60,7 @@ if (isset($_POST['save_parcel_complete'])) {
     if (createParcel($conn, $_POST)) {
         showAlert("All records compiled & saved successfully!");
     } else {
-        showAlert("Database Error");
+        showAlert("Database error: Unable to save parcel data.");
     }
 }
 ?>
@@ -265,6 +274,4 @@ if (isset($_POST['save_parcel_complete'])) {
 
 </html>
 
-<?php
-include '../includes/footer.php';
-?>
+<?php include '../includes/footer.php'; ?>
