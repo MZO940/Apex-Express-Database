@@ -63,8 +63,8 @@ if (isset($_POST['save_parcel_complete'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apex Express - Admin Dashboard</title>
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="stylesheet" href="admin_dashboard.css">
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>

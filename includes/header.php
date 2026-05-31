@@ -5,7 +5,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <nav class="apex-navbar">
     <div class="nav-wrapper">
         <div class="nav-logo">
-            <img src="logo.png" alt="Apex Express Logo" class="logo-truck">
+            <img src="imgs/logo.png" alt="Apex Express Logo" class="logo-truck">
             <div class="logo-info">
                 <div class="logo-text">
                     <span class="brand-bold">Apex</span><span class="brand-light">Express</span>

@@ -3,7 +3,7 @@
     <div class="footer-bottom">
         <div class="bottom-content">
             <div class="brand-group">
-                <img src="logo.png" alt="Brand Logo" class="footer-logo">
+                <img src="imgs/logo.png" alt="Brand Logo" class="footer-logo">
                 <span class="brand-name">Apex Express</span>
             </div>
             <p>@ 1983 - 2026 Apex Express Logistics. All rights reserved.</p>
