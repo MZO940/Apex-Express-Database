@@ -19,7 +19,7 @@ if (isset($_POST['login'])) {
         $_SESSION['logged_in'] = true;
         $_SESSION['current_view'] = 'menu'; // Default view on login
     } else {
-        echo "<script>alert('Wrong Password!');</script>";
+        echo "<script>alert('Wrong Credentials!');</script>";
     }
 }
 
@@ -32,7 +32,7 @@ if (isset($_GET['view']) && isset($_SESSION['logged_in'])) {
 
 // 1. ADD BRANCH
 if (isset($_POST['save_branch'])) {
-    $b_id = mysqli_real_escape_string($conn, $_POST['branch_id']);
+    $b_id = mysqli_real_escape_string($conn, $_POST['branch_id']); // Real Escape Strings to prevent SQL Injection Attacks
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $street = mysqli_real_escape_string($conn, $_POST['street']);
@@ -40,8 +40,8 @@ if (isset($_POST['save_branch'])) {
     $city = mysqli_real_escape_string($conn, $_POST['city']);
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
 
-    mysqli_begin_transaction($conn);
-    try {
+    mysqli_begin_transaction($conn); // Start Transaction & Try-Catch Blocks to guarantee database integrity and atomicity
+    try { 
         mysqli_query($conn, "INSERT INTO branch (Branch_ID, Name, Email, Street_no, Area, City) VALUES ('$b_id', '$name', '$email', '$street', '$area', '$city')");
         if (!empty($phone)) {
             mysqli_query($conn, "INSERT INTO branch_phone (Branch_ID, Phone_no) VALUES ('$b_id', '$phone')");
@@ -63,7 +63,6 @@ if (isset($_POST['save_rider'])) {
     $b_id = mysqli_real_escape_string($conn, $_POST['branch_id']);
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
 
-    // Check if branch exists
     $check_branch = mysqli_query($conn, "SELECT Branch_ID FROM branch WHERE Branch_ID = '$b_id'");
     if (mysqli_num_rows($check_branch) == 0) {
         echo "<script>alert('Error: Branch ID does not exist! Please add the branch first.');</script>";
@@ -87,12 +86,10 @@ if (isset($_POST['save_rider'])) {
 if (isset($_POST['save_parcel_complete'])) {
     $b_id = mysqli_real_escape_string($conn, $_POST['branch_id']);
 
-    // REQUIRED VALIDATION: Verify if Branch ID exists
     $check_branch = mysqli_query($conn, "SELECT Branch_ID FROM branch WHERE Branch_ID = '$b_id'");
     if (mysqli_num_rows($check_branch) == 0) {
         echo "<script>alert('CRITICAL ERROR: Branch ID ($b_id) does not exist! Operation cancelled.');</script>";
     } else {
-        // Collect all variables
         $s_id = mysqli_real_escape_string($conn, $_POST['sender_id']);
         $s_fname = mysqli_real_escape_string($conn, $_POST['sender_fname']);
         $s_lname = mysqli_real_escape_string($conn, $_POST['sender_lname']);
@@ -116,33 +113,28 @@ if (isset($_POST['save_parcel_complete'])) {
         $weight = mysqli_real_escape_string($conn, $_POST['weight']);
         $price = mysqli_real_escape_string($conn, $_POST['price']);
         $pay_opt = mysqli_real_escape_string($conn, $_POST['payment_option']);
-        $rider_id = !empty($_POST['rider_id']) ? "'" . mysqli_real_escape_string($conn, $_POST['rider_id']) . "'" : "NULL";
+        $rider_id = !empty($_POST['rider_id']) ? "'" . mysqli_real_escape_string($conn, $_POST['rider_id']) . "'" : "NULL"; // IF-shorthand
 
         $st_id = mysqli_real_escape_string($conn, $_POST['status_id']);
         $st_type = mysqli_real_escape_string($conn, $_POST['status_type']);
         $remarks = mysqli_real_escape_string($conn, $_POST['remarks']);
 
-        // Start Transaction to guarantee database integrity
         mysqli_begin_transaction($conn);
         try {
-            // Check/Insert Sender
             $chk_s = mysqli_query($conn, "SELECT Sender_ID FROM sender WHERE Sender_ID='$s_id'");
             if (mysqli_num_rows($chk_s) == 0) {
                 mysqli_query($conn, "INSERT INTO sender VALUES ('$s_id', '$s_fname', '$s_lname', '$s_email', '$s_street', '$s_area', '$s_city')");
                 mysqli_query($conn, "INSERT INTO sender_phone VALUES ('$s_id', '$s_phone')");
             }
 
-            // Check/Insert Receiver
             $chk_r = mysqli_query($conn, "SELECT Reciever_ID FROM reciever WHERE Reciever_ID='$r_id'");
             if (mysqli_num_rows($chk_r) == 0) {
                 mysqli_query($conn, "INSERT INTO reciever VALUES ('$r_id', '$r_fname', '$r_lname', '$r_email', '$r_zip', '$r_street', '$r_area', '$r_city')");
                 mysqli_query($conn, "INSERT INTO reciever_phone VALUES ('$r_id', '$r_phone')");
             }
 
-            // Insert Delivery Status
             mysqli_query($conn, "INSERT INTO delivery_status (Status_id, Status_type, Remarks, Attempts) VALUES ('$st_id', '$st_type', '$remarks', 0)");
 
-            // Insert Parcel
             $sql_parcel = "INSERT INTO parcel (Tracking_id, Weight, Origin_city, Destination_city, Sender_ID, Reciever_ID, Branch_ID, Rider_ID, Status_id, price, payment_option) 
                            VALUES ('$tid', '$weight', '$s_city', '$r_city', '$s_id', '$r_id', '$b_id', $rider_id, '$st_id', '$price', '$pay_opt')";
             mysqli_query($conn, $sql_parcel);
@@ -253,7 +245,7 @@ if (isset($_POST['save_parcel_complete'])) {
                         $tables = ['parcel', 'branch', 'rider', 'sender', 'reciever', 'delivery_status'];
                         foreach ($tables as $tbl) {
                             echo "<h3 class='table-section-divider-title'>" . strtoupper($tbl) . " DATA</h3>";
-                            $res = mysqli_query($conn, "SELECT * FROM `$tbl` LIMIT 10");
+                            $res = mysqli_query($conn, "SELECT * FROM `$tbl`");
                             if (mysqli_num_rows($res) > 0) {
                                 echo "<div class='table-alignment-box'><table class='brand-data-table'><thead><tr>";
                                 while ($field = mysqli_fetch_field($res)) {
